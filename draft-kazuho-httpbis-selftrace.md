@@ -17,6 +17,11 @@ author:
     name: Kazuho Oku
     org: Fastly
     email: kazuhooku@gmail.com
+  -
+    ins: J. Iyengar
+    name: Jana Iyengar
+    org: Fastly
+    email: jri.ietf@gmail.com
 
 normative:
 
