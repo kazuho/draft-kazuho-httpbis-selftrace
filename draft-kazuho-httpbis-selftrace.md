@@ -21,6 +21,13 @@ author:
 normative:
 
 informative:
+  FETCH:
+    target: https://fetch.spec.whatwg.org
+    title: Fetch - Living Standard
+    author:
+     -
+        org: WHATWG
+
 
 --- abstract
 
@@ -70,8 +77,36 @@ trace.
 
 # Security Considerations
 
-TBD: discuss coalescing intermediaries acting as client, connections that serve
-requests to multiple origins.
+## Cross-Origin Attacks
+
+To prevent cross-origin attacks, web browser access to the self-trace MUST be
+resticted to the same origin {{FETCH}}.
+
+
+## Coalescing Proxy Acting as Client
+
+When a forward proxy that coalesces HTTP requests from multiple end-clients
+connect to an HTTP server that can serve the self-trace, and if one of the
+end-clients request the self-trace, the provided trace might contain information
+regarding requests bein issued by other end-clients.
+
+To prevent this attack, servers SHOULD serve self-trace only when HTTPS is being
+used. The assumption here is that when HTTPS is being used, end-clients are
+directly connected to the server.
+
+
+## Connections Serving Multiple Origins
+
+Sometimes, reverse proxies are configured as such that one HTTP connection can
+be used for serving multiple origins maintained by different entities (e.g., CDN
+using an X.509 certificate that contains multiple customers). In such
+deployments, a malicious origin might use a script running on a web browser to
+fetch the self-trace that conains traffic information related to other origins
+colocated, then upload the fetched trace to extract information.
+
+To prevent such an attack, self-trace SHOULD only be provided from an origin
+that is maintained by the operator of the reverse proxy.
+
 
 # IANA Considerations
 
