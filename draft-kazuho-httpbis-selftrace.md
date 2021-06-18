@@ -109,8 +109,14 @@ deployments, a malicious origin might use a script running on a web browser to
 fetch the self-trace that conains traffic information related to other origins
 colocated, then upload the fetched trace to extract information.
 
-To prevent such an attack, self-trace SHOULD only be provided from an origin
-that is maintained by the operator of the reverse proxy.
+To prevent such attacks, reverse proxies used for forwarding HTTP requests to
+multiple origins belonging to different entities SHOULD do either of the
+following:
+
+* Serve self-trace only from an origin maintained by the operator of the reverse
+  proxy.
+* Serve self-trace during only when requests for one origin is inflight on a
+  given connection.
 
 
 # IANA Considerations
