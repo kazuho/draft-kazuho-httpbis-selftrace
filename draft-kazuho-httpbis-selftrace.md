@@ -107,12 +107,6 @@ When a server receives a GET request for the self-tracing URI, it SHOULD start
 streaming the server's connection and streams view for the connection on which
 that request was received.
 
-A server MAY respond with the following errors.
-XXX Error responses
-
-A self-trace response is terminated when either endpoint terminates the stream
-or connection on which the request or response is being sent.
-
 
 # Implementation Considerations
 
@@ -123,8 +117,8 @@ event log, such as a streaming qlog trace
 {{?QLOG=I-D.ietf-quic-qlog-main-schema}}. 
 
 To prevent this infinite feedback loop, a server SHOULD suspend transmission of
-a self-trace response when this response is the only one in flight in the
-connection. The server SHOULD resume transmission of the self trace When a
+a self-trace response when this HTTP response is the only one in flight in the
+connection. The server SHOULD resume transmission of the self trace when a
 subsequent HTTP request is received on the same HTTP connection.
 
 Multiple concurrent self-trace requests can similarly result in an infinite
@@ -167,7 +161,7 @@ co-located origins and upload the collected trace back to the malicious origin.
 To address this attack, reverse proxies that forward HTTP requests to multiple
 origins belonging to different entities MUST do one of the following:
 
-* serve self trace from an origin maintained by the operator of the reverse
+* serve self trace only from an origin maintained by the operator of the reverse
   proxy,
 
 * serve self-trace only when requests for one origin is inflight on a given
